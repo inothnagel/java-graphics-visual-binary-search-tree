@@ -5,21 +5,22 @@ import java.awt.*;
 
 import static java.lang.Thread.sleep;
 
-public class Main extends JFrame{
+public class Main extends JFrame {
     private Canvas canvas = new Canvas();
     private Node rootNode;
-    private Point startingPoint;
-    private double rangeX = 10000;
-    private double rangeY = 10000;
+    private Point startingPoint = new Point(300, 300);
+    private Field field;
+    private CoordinateMapper coordinateMapper;
 
-    private Main(){
+    private Main() {
         super();
+        field = new Field(1000,1000);
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         canvas.setSize(getSize());
         add(canvas);
         setVisible(true);
         canvas.createBufferStrategy(2);
-
+        this.coordinateMapper = new CoordinateMapper(canvas, field);
         rootNode = initTree();
     }
 
@@ -43,7 +44,7 @@ public class Main extends JFrame{
     }
 
     private void renderTree(Graphics graphics, Node rootNode) {
-        recursiveDrawNode(graphics, rootNode, startingPoint);
+//        recursiveDrawNode(graphics, rootNode, startingPoint);
     }
 
     private void recursiveDrawNode(Graphics graphics, Node node, Point point) {
@@ -51,12 +52,13 @@ public class Main extends JFrame{
     }
 
     private void drawNode(Graphics graphics, Node node, Point point) {
-        graphics.fillOval(displayX(point.getX()), displayY(point.getY()), pixelWidth(node.width()), pixelHeight(node.Height()));
+        graphics.setColor(new Color(200, 200, 200));
+        graphics.fillOval(displayX(point.getX()), displayY(point.getY()), pixelWidth(node.getWidth()), pixelHeight(node.getHeight()));
     }
 
     private void clearBackground(Graphics graphics) {
         graphics.setColor(new Color(0, 0, 0));
-        graphics.fillRect(0,0,getSize().width, getSize().height);
+        graphics.fillRect(0, 0, getSize().width, getSize().height);
     }
 
     private int displayY(double y) {
@@ -67,27 +69,27 @@ public class Main extends JFrame{
         return (int) Math.round(x / pixelWidth());
     }
 
-    private double pixelHeight() {
-        return rangeY / maxPixelHeight();
-    }
-
-    private double maxPixelHeight() {
-        return getSize().getWidth();
-    }
-
-    private double pixelWidth() {
-        return rangeX / maxPixelWidth();
-    }
-
-    private double maxPixelWidth() {
-        return getSize().getHeight();
-    }
-
     private int pixelWidth(double rangeWidth) {
         return (int) (rangeWidth / pixelWidth());
     }
 
     private int pixelHeight(double rangeHeight) {
         return (int) (rangeHeight / pixelHeight());
+    }
+
+    private void printCoordinates(Graphics graphics) {
+        double mouseX = canvas.getMousePosition().getX();
+        double mouseY = canvas.getMousePosition().getY();
+        graphics.setColor(new Color(200, 200, 200));
+        graphics.drawString("Mouse: " + mouseX + " " + mouseY, 20, 20);
+        graphics.drawString("Field: " + mouseFieldX() + " " + mouseFieldY() ,20, 40);
+    }
+
+    private double mouseFieldY() {
+        return coordinateMapper.getFieldPosition(getMousePosition()).getY();
+    }
+
+    private double mouseFieldX() {
+        return coordinateMapper.getFieldPosition(getMousePosition()).getX();
     }
 }
