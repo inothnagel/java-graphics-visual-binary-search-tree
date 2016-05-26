@@ -21,17 +21,18 @@ public class CoordinateMapperTest {
 
     @Test
     public void convertsCanvasToFieldCoordinates() {
-        CanvasPosition canvasPosition = new CanvasPosition(200f, 150f);
-        FieldPosition fieldPosition = mapper.toFieldPosition(canvasPosition);
-        assertThat(fieldPosition.x, is(400f));
-        assertThat(fieldPosition.y, is(300f));
+        CanvasCoordinate canvasCoordinate = new CanvasCoordinate(200f, 150f);
+        FieldCoordinate fieldCoordinate = mapper.toFieldPosition(canvasCoordinate);
+        assertThat(fieldCoordinate.x, is(400f));
+        assertThat(fieldCoordinate.y, is(300f));
     }
 
     @Test
     public void convertsFieldCoordinatesToCanvasCoordinates() {
-        FieldPosition fieldPosition = new FieldPosition(700f, 300f);
-        CanvasPosition canvasPosition = mapper.toCanvasPosition(fieldPosition);
-        assertThat(canvasPosition.x, is(350f));
-        assertThat(canvasPosition.y, is(150f));
+        FieldCoordinate fieldCoordinate = new FieldCoordinate(700f, 300f);
+        CanvasCoordinate canvasCoordinate = mapper.toCanvasPosition(fieldCoordinate);
+        assertThat(canvasCoordinate.x, is(350f));
+        assertThat(canvasCoordinate.y, is(150f));
     }
+
 }

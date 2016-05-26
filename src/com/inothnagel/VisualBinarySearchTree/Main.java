@@ -44,8 +44,8 @@ public class Main extends JFrame {
         float mouseX = (float) canvas.getMousePosition().getX();
         float mouseY = (float) canvas.getMousePosition().getY();
 
-        FieldPosition fieldPosition = coordinateMapper.toFieldPosition(
-                new CanvasPosition(
+        FieldCoordinate fieldCoordinate = coordinateMapper.toFieldPosition(
+                new CanvasCoordinate(
                         canvas.getMousePosition().getX(),
                         canvas.getMousePosition().getY()
                 )
@@ -53,7 +53,7 @@ public class Main extends JFrame {
 
         graphics.setColor(new Color(200, 200, 200));
         graphics.drawString("Mouse: " + mouseX + " " + mouseY, 20, 20);
-        graphics.drawString("Field: " + fieldPosition.x + " " + fieldPosition.y, 20, 40);
+        graphics.drawString("Field: " + fieldCoordinate.x + " " + fieldCoordinate.y, 20, 40);
     }
 
     private void clearBackground(Graphics graphics) {

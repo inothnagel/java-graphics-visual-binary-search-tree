@@ -11,17 +11,17 @@ public class CoordinateMapper {
         this.field = field;
     }
 
-    public FieldPosition toFieldPosition(CanvasPosition canvasPosition) {
-        return new FieldPosition(
-                canvasPosition.x * pixelWidth(),
-                canvasPosition.y * pixelHeight()
+    public FieldCoordinate toFieldPosition(CanvasCoordinate canvasCoordinate) {
+        return new FieldCoordinate(
+                canvasCoordinate.x * pixelWidth(),
+                canvasCoordinate.y * pixelHeight()
         );
     }
 
-    public CanvasPosition toCanvasPosition(FieldPosition fieldPosition) {
-        return new CanvasPosition(
-                fieldPosition.x / pixelWidth(),
-                fieldPosition.y / pixelHeight()
+    public CanvasCoordinate toCanvasPosition(FieldCoordinate fieldCoordinate) {
+        return new CanvasCoordinate(
+                fieldCoordinate.x / pixelWidth(),
+                fieldCoordinate.y / pixelHeight()
         );
     }
 
