@@ -11,15 +11,17 @@ public class CoordinateMapper {
         this.field = field;
     }
 
-    public FieldCoordinate toFieldPosition(CanvasCoordinate canvasCoordinate) {
+    public FieldCoordinate toFieldCoordinate(CanvasCoordinate canvasCoordinate) {
         return new FieldCoordinate(
+                this,
                 canvasCoordinate.x * pixelWidth(),
                 canvasCoordinate.y * pixelHeight()
         );
     }
 
-    public CanvasCoordinate toCanvasPosition(FieldCoordinate fieldCoordinate) {
+    public CanvasCoordinate toCanvasCoordinate(FieldCoordinate fieldCoordinate) {
         return new CanvasCoordinate(
+                this,
                 fieldCoordinate.x / pixelWidth(),
                 fieldCoordinate.y / pixelHeight()
         );
@@ -31,5 +33,17 @@ public class CoordinateMapper {
 
     private float pixelWidth() {
         return field.getWidth() / canvas.getWidth();
+    }
+
+    public FieldCoordinate newFieldCoordinate(float x, float y) {
+        return new FieldCoordinate(this, x, y);
+    }
+
+    public CanvasCoordinate newCanvasCoordinate(float x, float y) {
+        return new CanvasCoordinate(this, x, y);
+    }
+
+    public FieldCoordinate fieldCoordinateFromCanvasCoordinates(float x, float y) {
+        return new CanvasCoordinate(this, x, y).toFieldCoordinate();
     }
 }
