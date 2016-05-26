@@ -8,9 +8,6 @@ import java.awt.*;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
-/**
- * Created by inothnagel on 2016/05/26.
- */
 public class CoordinateMapperTest {
     CoordinateMapper mapper;
 

@@ -1,8 +1,5 @@
 package com.inothnagel.VisualBinarySearchTree;
 
-/**
- * game field
- */
 public class Field {
     private float width = 1000;
     private float height = 1000;

@@ -1,12 +1,7 @@
 package com.inothnagel.VisualBinarySearchTree;
 
-import com.sun.javafx.geom.Point2D;
-
 import java.awt.*;
 
-/**
- * Created by inothnagel on 2016/05/25.
- */
 public class CoordinateMapper {
     private final Canvas canvas;
     private final Field field;
@@ -15,7 +10,6 @@ public class CoordinateMapper {
         this.canvas = canvas;
         this.field = field;
     }
-
 
     public FieldPosition toFieldPosition(CanvasPosition canvasPosition) {
         return new FieldPosition(
