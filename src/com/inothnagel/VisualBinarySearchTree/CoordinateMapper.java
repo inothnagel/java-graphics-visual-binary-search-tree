@@ -1,5 +1,7 @@
 package com.inothnagel.VisualBinarySearchTree;
 
+import com.sun.javafx.geom.Point2D;
+
 import java.awt.*;
 
 /**
@@ -14,7 +16,26 @@ public class CoordinateMapper {
         this.field = field;
     }
 
-    public FieldPosition getFieldPosition(Point mousePosition) {
-        
+
+    public FieldPosition toFieldPosition(CanvasPosition canvasPosition) {
+        return new FieldPosition(
+                canvasPosition.x * pixelWidth(),
+                canvasPosition.y * pixelHeight()
+        );
+    }
+
+    public CanvasPosition toCanvasPosition(FieldPosition fieldPosition) {
+        return new CanvasPosition(
+                fieldPosition.x / pixelWidth(),
+                fieldPosition.y / pixelHeight()
+        );
+    }
+
+    private float pixelHeight() {
+        return field.getHeight() / canvas.getHeight();
+    }
+
+    private float pixelWidth() {
+        return field.getWidth() / canvas.getWidth();
     }
 }

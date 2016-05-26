@@ -4,19 +4,19 @@ package com.inothnagel.VisualBinarySearchTree;
  * game field
  */
 public class Field {
-    private double width = 1000;
-    private double height= 1000;
+    private float width = 1000;
+    private float height = 1000;
 
-    public Field(double width, double height) {
+    public Field(float width, float height) {
         this.width = width;
         this.height = height;
     }
 
-    public double getWidth() {
+    public float getWidth() {
         return width;
     }
 
-    public double getHeight() {
+    public float getHeight() {
         return height;
     }
 }

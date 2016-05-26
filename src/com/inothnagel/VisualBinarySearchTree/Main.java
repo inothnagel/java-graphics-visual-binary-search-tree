@@ -7,25 +7,18 @@ import static java.lang.Thread.sleep;
 
 public class Main extends JFrame {
     private Canvas canvas = new Canvas();
-    private Node rootNode;
-    private Point startingPoint = new Point(300, 300);
     private Field field;
     private CoordinateMapper coordinateMapper;
 
     private Main() {
         super();
-        field = new Field(1000,1000);
+        field = new Field(1000, 1000);
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         canvas.setSize(getSize());
         add(canvas);
         setVisible(true);
         canvas.createBufferStrategy(2);
         this.coordinateMapper = new CoordinateMapper(canvas, field);
-        rootNode = initTree();
-    }
-
-    private Node initTree() {
-        return new Node(13);
     }
 
     public static void main(String arg[]) throws InterruptedException {
@@ -37,23 +30,30 @@ public class Main extends JFrame {
         while (true) {
             Graphics graphics = canvas.getBufferStrategy().getDrawGraphics();
             clearBackground(graphics);
-            renderTree(graphics, rootNode);
+            printCoordinates(graphics);
             canvas.getBufferStrategy().show();
             sleep(40);
         }
     }
 
-    private void renderTree(Graphics graphics, Node rootNode) {
-//        recursiveDrawNode(graphics, rootNode, startingPoint);
-    }
+    private void printCoordinates(Graphics graphics) {
+        if (getMousePosition() == null) {
+            return;
+        }
 
-    private void recursiveDrawNode(Graphics graphics, Node node, Point point) {
-        drawNode(graphics, node, point);
-    }
+        float mouseX = (float) canvas.getMousePosition().getX();
+        float mouseY = (float) canvas.getMousePosition().getY();
 
-    private void drawNode(Graphics graphics, Node node, Point point) {
+        FieldPosition fieldPosition = coordinateMapper.toFieldPosition(
+                new CanvasPosition(
+                        canvas.getMousePosition().getX(),
+                        canvas.getMousePosition().getY()
+                )
+        );
+
         graphics.setColor(new Color(200, 200, 200));
-        graphics.fillOval(displayX(point.getX()), displayY(point.getY()), pixelWidth(node.getWidth()), pixelHeight(node.getHeight()));
+        graphics.drawString("Mouse: " + mouseX + " " + mouseY, 20, 20);
+        graphics.drawString("Field: " + fieldPosition.x + " " + fieldPosition.y, 20, 40);
     }
 
     private void clearBackground(Graphics graphics) {
@@ -61,35 +61,4 @@ public class Main extends JFrame {
         graphics.fillRect(0, 0, getSize().width, getSize().height);
     }
 
-    private int displayY(double y) {
-        return (int) Math.round(y / pixelHeight());
-    }
-
-    private int displayX(double x) {
-        return (int) Math.round(x / pixelWidth());
-    }
-
-    private int pixelWidth(double rangeWidth) {
-        return (int) (rangeWidth / pixelWidth());
-    }
-
-    private int pixelHeight(double rangeHeight) {
-        return (int) (rangeHeight / pixelHeight());
-    }
-
-    private void printCoordinates(Graphics graphics) {
-        double mouseX = canvas.getMousePosition().getX();
-        double mouseY = canvas.getMousePosition().getY();
-        graphics.setColor(new Color(200, 200, 200));
-        graphics.drawString("Mouse: " + mouseX + " " + mouseY, 20, 20);
-        graphics.drawString("Field: " + mouseFieldX() + " " + mouseFieldY() ,20, 40);
-    }
-
-    private double mouseFieldY() {
-        return coordinateMapper.getFieldPosition(getMousePosition()).getY();
-    }
-
-    private double mouseFieldX() {
-        return coordinateMapper.getFieldPosition(getMousePosition()).getX();
-    }
 }
