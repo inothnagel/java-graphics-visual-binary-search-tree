@@ -11,17 +11,19 @@ public class CoordinateMapper {
         this.field = field;
     }
 
-    public FieldPosition toFieldPosition(CanvasPosition canvasPosition) {
-        return new FieldPosition(
-                canvasPosition.x * pixelWidth(),
-                canvasPosition.y * pixelHeight()
+    public FieldCoordinate toFieldCoordinate(CanvasCoordinate canvasCoordinate) {
+        return new FieldCoordinate(
+                this,
+                canvasCoordinate.x * pixelWidth(),
+                canvasCoordinate.y * pixelHeight()
         );
     }
 
-    public CanvasPosition toCanvasPosition(FieldPosition fieldPosition) {
-        return new CanvasPosition(
-                fieldPosition.x / pixelWidth(),
-                fieldPosition.y / pixelHeight()
+    public CanvasCoordinate toCanvasCoordinate(FieldCoordinate fieldCoordinate) {
+        return new CanvasCoordinate(
+                this,
+                fieldCoordinate.x / pixelWidth(),
+                fieldCoordinate.y / pixelHeight()
         );
     }
 
@@ -31,5 +33,25 @@ public class CoordinateMapper {
 
     private float pixelWidth() {
         return field.getWidth() / canvas.getWidth();
+    }
+
+    public FieldCoordinate newFieldCoordinate(float x, float y) {
+        return new FieldCoordinate(this, x, y);
+    }
+
+    public CanvasCoordinate newCanvasCoordinate(float x, float y) {
+        return new CanvasCoordinate(this, x, y);
+    }
+
+    public FieldCoordinate fieldCoordinateFromCanvasCoordinates(float x, float y) {
+        return new CanvasCoordinate(this, x, y).toFieldCoordinate();
+    }
+
+    public CanvasCoordinate getMouseCoordinates() {
+        return new CanvasCoordinate(
+                this,
+                (float) canvas.getMousePosition().getX(),
+                (float) canvas.getMousePosition().getY()
+        );
     }
 }
