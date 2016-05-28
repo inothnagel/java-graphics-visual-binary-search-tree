@@ -44,11 +44,7 @@ public class Main extends JFrame {
         float mouseX = (float) canvas.getMousePosition().getX();
         float mouseY = (float) canvas.getMousePosition().getY();
 
-//        FieldCoordinate fieldCoordinate = coordinateMapper.fieldCoordinateFromCanvasCoordinates(
-//                (float) canvas.getMousePosition().getX(), (float) canvas.getMousePosition().getY()
-//        );
-
-        FieldCoordinate fieldCoordinate = coordinateMapper.mouseCoordinates().toFieldCoordinates();
+        FieldCoordinate fieldCoordinate = coordinateMapper.getMouseCoordinates().toFieldCoordinate();
 
         graphics.setColor(new Color(200, 200, 200));
         graphics.drawString("Mouse: " + mouseX + " " + mouseY, 20, 20);

@@ -2,11 +2,13 @@ package com.inothnagel.VisualBinarySearchTree;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mockito;
 
 import java.awt.*;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.when;
 
 public class CoordinateMapperTest {
     CoordinateMapper coordinateMapper;
@@ -58,11 +60,14 @@ public class CoordinateMapperTest {
         assertThat(fieldCoordinate.y, is(500f));
     }
 
-    @Test void returnsMouseCoordinatesAsCanvasCoordinates() {
-        throw new RuntimeException("TODO: Import Mockito using Ant and then use it to mock out the" +
-                "canvas.GetMousePosition method");
-        when(coordinateMapper.canvas.getMousePosition()).thenReturn(new Point(123, 124));
-        CanvasCoordinate mouseCoordinates = coordinateMapper.mouseCoordinates();
+    @Test
+    public void returnsMouseCoordinatesAsCanvasCoordinates() {
+        Canvas canvas = Mockito.mock(Canvas.class);
+        when(canvas.getMousePosition()).thenReturn(new Point(123, 124));
+        canvas.setSize(400, 300);
+        Field field = new Field(800f, 600f);
+        coordinateMapper = new CoordinateMapper(canvas, field);
+        CanvasCoordinate mouseCoordinates = coordinateMapper.getMouseCoordinates();
         assertThat(mouseCoordinates.x, is(123f));
         assertThat(mouseCoordinates.y, is(124f));
     }

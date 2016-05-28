@@ -46,4 +46,12 @@ public class CoordinateMapper {
     public FieldCoordinate fieldCoordinateFromCanvasCoordinates(float x, float y) {
         return new CanvasCoordinate(this, x, y).toFieldCoordinate();
     }
+
+    public CanvasCoordinate getMouseCoordinates() {
+        return new CanvasCoordinate(
+                this,
+                (float) canvas.getMousePosition().getX(),
+                (float) canvas.getMousePosition().getY()
+        );
+    }
 }
